@@ -77,15 +77,19 @@ const viewEmployees = () => {
 };
 
 const viewEmpbyDepartment = () => {
-  console.log('worked2');
-  // const query =
-  //   'SELECT employee.id, employee.first_name, employee.last_name , role.title, role.salary FROM employee left join role on employee.role_id=role.id;';
-  // connection.query(query, (err, res) => {
-  //   if (err) throw err;
-  //   console.log('\n');
-  //       console.log('VIEW ALL EMPLOYEES');
-  //       console.log('\n');
-  //       console.table(res);
-  //       prompt();
-  // });
+  // console.log('worked2');
+  const query =
+    `SELECT department.name AS department, role.title, employee.id, employee.first_name, employee.last_name
+    FROM employee
+    LEFT JOIN role ON (role.id = employee.role_id)
+    LEFT JOIN department ON (department.id = role.department_id)
+    ORDER BY department.name;`;
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.log('\n');
+        console.log('VIEW EMPLOYEE BY DEPARTMENT');
+        console.log('\n');
+        console.table(res);
+        addDepartment();
+  });
 };
