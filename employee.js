@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
-// const cTable = require('console.table');
+require('console.table');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -31,8 +31,8 @@ const addDepartment = () => {
       ],
     })
     .then((answer) => {
-      // console.log(answer);
-      switch (answer.action) {
+      console.log(answer);
+      switch (answer.department) {
         case 'View all employees':
           viewEmployees();
           break;
@@ -64,6 +64,20 @@ const addDepartment = () => {
 
 const viewEmployees = () => {
   console.log('worked');
+  const query =
+    'SELECT employee.id, employee.first_name, employee.last_name , role.title, role.salary FROM employee left join role on employee.role_id=role.id;';
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.log('\n');
+        console.log('VIEW ALL EMPLOYEES');
+        console.log('\n');
+        console.table(res);
+        addDepartment();
+  });
+};
+
+const viewEmpbyDepartment = () => {
+  console.log('worked2');
   // const query =
   //   'SELECT employee.id, employee.first_name, employee.last_name , role.title, role.salary FROM employee left join role on employee.role_id=role.id;';
   // connection.query(query, (err, res) => {
