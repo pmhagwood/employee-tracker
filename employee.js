@@ -113,13 +113,40 @@ const viewEmpbyManager = () => {
 };
 
 const addEmployee = () => {
-  inquirer
-    .prompt ([
+  connection.query('SELECT * FROM role', function(err, res){
+    if (err) throw (err);
+    inquirer
+    .prompt([
       {
-        name: 'role',
-        type
+      name: "firstName",
+      type: "input",
+      message: "What is employee's first name?",
+      },
+      {
+        name: "lastName",
+        type: "input",
+        message: "What is Employee's last name?",
+      },
+      {
+        name: "roleName",
+        type: "list",
+        message: "what role does the Employee have?",
+        // hopefully gets all the roles
+        choices: function() {
+          rolesArray = [];
+          res.map(res => {
+            rolesArray.push(
+              res.title
+            );
+          })
+          return rolesArray;
+        }
       }
     ])
+    .then(function(answer){
+      console.log(answer);
+    })
+  })
 }
 
 const removeEmployee = () => {
@@ -144,3 +171,4 @@ const removeEmployee = () => {
       )
     })
 }
+
