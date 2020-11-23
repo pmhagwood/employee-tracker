@@ -264,3 +264,30 @@ const removeDepartment = () => {
       )
     })
 }
+
+const updateEmployeerole = () => {
+  connection.query('SELECT * FROM employee', function(err, res){
+    if(err) throw (err);
+    inquirer
+    .prompt([
+      {
+        name: "employeeUpdate",
+        type: "list",
+        message: "Select Employee to change role",
+        choices: function(){
+          employeeArray = [];
+          res.map(res => {
+            employeeArray.push(
+              res.last_name
+            )
+          })
+          return employeeArray;
+        }
+      }
+      
+    ])
+    .then(function(answer){
+      console.log(answer);
+    })
+  })
+}
