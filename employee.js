@@ -145,6 +145,17 @@ const addEmployee = () => {
     ])
     .then(function(answer){
       console.log(answer);
+      const role = answer.roleName;
+      console.log('role name is : ', role);
+      // try to get the role and add the employee and get ID
+      connection.query('SELECT * FROM role', function(err, res){
+        if (err) throw (err);
+        let filterRole = res.filter(function(res){
+          return res.title == role;
+        })
+        let roleId = filterRole[0].id;
+        console.log(roleId);
+      })
     })
   })
 }
