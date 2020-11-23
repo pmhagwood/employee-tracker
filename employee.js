@@ -25,6 +25,8 @@ const addDepartment = () => {
         'View all employees by department',
         'View all employees by manager',
         'Add employee',
+        'Add new department',
+        'Remove department',
         'Remove employee',
         'Update employee role',
         'Update employee manager'
@@ -47,6 +49,12 @@ const addDepartment = () => {
           break;
         case 'Remove employee':
           removeEmployee();
+          break;
+        case 'Add new department':
+          addNewDepartment();
+          break;
+        case 'Remove department':
+          removeDepartment();
           break;
         case 'Update employee role':
           updateEmployeerole();
@@ -218,3 +226,41 @@ const removeEmployee = () => {
     })
 }
 
+function addNewDepartment(){
+  inquirer
+  .prompt({
+    name: "department",
+    type: "input",
+    message: "Add a new Department?"
+  })
+  .then(function(answer){
+    connection.query('INSERT INTO department (name) VALUES ( ? )', answer.department, function(err, res){
+      console.log(`The following department has been added: ${(answer.department).toUpperCase()}.`)
+    })
+    viewEmpbyDepartment();
+  })
+}
+
+
+const removeDepartment = () => {
+  inquirer
+    .prompt([
+      {
+        name: "remove",
+        type: "input",
+        message: "Enter the ID of the Department you would like to remove: "
+      }
+    ])
+    .then(function (answer) {
+      connection.query('DELETE FROM department WHERE ?',
+        {
+          id: answer.remove
+        },
+        function (err) {
+          if (err) throw err;
+          console.log('Department has been removed');
+          addDepartment();
+        }
+      )
+    })
+}
