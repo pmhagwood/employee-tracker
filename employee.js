@@ -288,6 +288,31 @@ const updateEmployeerole = () => {
     ])
     .then(function(answer){
       console.log(answer);
+      // Have the employee need to update id from deparment
+      connection.query('SELECT * FROM role', function(err, res){
+        inquirer
+        .prompt([
+          {
+            name: "role",
+            type:"list",
+            message:"What is the new role?",
+            choices: function(){
+              rolesArray = [];
+              res.map(res => {
+                rolesArray.push(
+                  res.title
+                )
+              })
+              return rolesArray;
+            }
+          }
+        ])
+        .then(function(rolesAnswer){
+          const role = rolesAnswer.role;
+          console.log(role);
+        })
+      })
+    
     })
   })
 }
