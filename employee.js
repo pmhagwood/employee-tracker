@@ -155,6 +155,29 @@ const addEmployee = () => {
         })
         let roleId = filterRole[0].id;
         console.log(roleId);
+        connection.query('SELECT * FROM employee', function(err, res){
+          inquirer
+          .prompt ([
+            {
+              name:"manager",
+              type: "list",
+              message: "Employee's Manager Name.",
+              choices: function(){
+                managersArray = []
+                res.map(res => {
+                  managersArray.push(
+                    res.last_name
+                  )
+                  return managersArray;
+                })
+              }
+            }
+          ])
+          .then(function(managerAnswer){
+            const manager = managerAnswer.manager;
+            console.log("manager name ", manager);
+          })
+        })
       })
     })
   })
