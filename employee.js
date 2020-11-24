@@ -288,6 +288,7 @@ const updateEmployeerole = () => {
     ])
     .then(function(answer){
       console.log(answer);
+      const name = answer.employeeName;
       // Have the employee need to update id from deparment
       connection.query('SELECT * FROM role', function(err, res){
         inquirer
@@ -310,6 +311,13 @@ const updateEmployeerole = () => {
         .then(function(rolesAnswer){
           const role = rolesAnswer.role;
           console.log(role);
+          connection.query('SELECT * FROM role WHERE title = ?', [role], function(err){
+            if (err) throw err;
+            let roleId = res[0].id;
+            let change = [roleId, name]
+            console.log(change);
+            
+          })
         })
       })
     
