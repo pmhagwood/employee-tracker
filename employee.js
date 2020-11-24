@@ -268,6 +268,7 @@ const removeDepartment = () => {
 const updateEmployeerole = () => {
   connection.query('SELECT * FROM employee', function(err, res){
     if(err) throw (err);
+    console.log('main details ', res);
     inquirer
     .prompt([
       {
@@ -281,6 +282,7 @@ const updateEmployeerole = () => {
               res.last_name
             )
           })
+          console.log('employee Array ', employeeArray);
           return employeeArray;
         }
       }
@@ -288,7 +290,8 @@ const updateEmployeerole = () => {
     ])
     .then(function(answer){
       console.log(answer);
-      const name = answer.employeeName;
+      const name = answer.employeeUpdate;
+      console.log("name1 is ", answer.employeeUpdate);
       // Have the employee need to update id from deparment
       connection.query('SELECT * FROM role', function(err, res){
         inquirer
@@ -310,10 +313,11 @@ const updateEmployeerole = () => {
         ])
         .then(function(rolesAnswer){
           const role = rolesAnswer.role;
-          console.log(role);
+          console.log('this is the changed role', role);
           connection.query('SELECT * FROM role WHERE title = ?', [role], function(err){
             if (err) throw err;
             let roleId = res[0].id;
+            console.log("name2 is ", name);
             let change = [roleId, name]
             console.log(change);
             
