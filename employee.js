@@ -59,9 +59,9 @@ const addDepartment = () => {
         case 'Update employee role':
           updateEmployeerole();
           break;
-        case 'Update employee manager':
-          updateEmployeeManager();
-          break;
+        // case 'Update employee manager':
+        //   updateEmployeeManager();
+        //   break;
         case 'exit':
           connection.end();
           break;
@@ -317,9 +317,13 @@ const updateEmployeerole = () => {
           connection.query('SELECT * FROM role WHERE title = ?', [role], function(err){
             if (err) throw err;
             let roleId = res[0].id;
+            console.log("roleID is ", res);
             console.log("name2 is ", name);
             let change = [roleId, name]
             console.log(change);
+            connection.query('UPDATE employee SET role_id ? WHERE last_name ?', [change], function (err, res, fields){
+              console.log(`You have updated ${name}'s role to ${role}.`)
+            })
             
           })
         })
