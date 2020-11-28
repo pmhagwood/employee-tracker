@@ -14,4 +14,4 @@ The application makes use of inquirer and will display a chart for the user in t
 
 ## Video
 
-The video can be viewed here [video](https://youtu.be/MaSzWA15AOM)
+The video can be viewed here [video](https://youtu.be/JiQp1dfksUE)
